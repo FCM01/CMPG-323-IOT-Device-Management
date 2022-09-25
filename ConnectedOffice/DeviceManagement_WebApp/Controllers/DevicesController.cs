@@ -24,29 +24,28 @@ namespace DeviceManagement_WebApp.Controllers
         // GET: Devices
         public async Task<IActionResult> Index()
         {
-            var connectedOfficeContext = _context.Device.Include(d => d.Category).Include(d => d.Zone);
             return View(_deviceRepository.GetAll());
         }
 
-        // GET: Devices/Details/5
-        //public async Task<IActionResult> Details(Guid? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
+        //GET: Devices/Details/5
+        public async Task<IActionResult> Details(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-        //    var device = _deviceRepository.GetById(id)
-        //        .Include(d => d.Category)
-        //        .Include(d => d.Zone)
-        //        .FirstOrDefaultAsync(m => m.DeviceId == id);
-        //    if (device == null)
-        //    {
-        //        return NotFound();
-        //    }
+            var device = _deviceRepository.GetById(id)
+                .Include(d => d.Category)
+                .Include(d => d.Zone)
+                .FirstOrDefaultAsync(m => m.DeviceId == id);
+            if (device == null)
+            {
+                return NotFound();
+            }
 
-        //    return View(device);
-        //}
+            return View(device);
+        }
 
         // GET: Devices/Create
         public IActionResult Create()

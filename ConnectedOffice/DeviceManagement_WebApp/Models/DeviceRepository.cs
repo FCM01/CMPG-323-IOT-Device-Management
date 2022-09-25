@@ -11,7 +11,7 @@ namespace DeviceManagement_WebApp.Models
 
         public Device GetMostRecentService()
         {
-            return _context.Device.OrderByDescending(service => service.DeviceId).FirstOrDefault();
+            return _context.Device.OrderByDescending(service => service.DateCreated).FirstOrDefault();
         }
     }
 }

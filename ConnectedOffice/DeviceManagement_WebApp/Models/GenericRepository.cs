@@ -20,6 +20,12 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         _context.Set<T>().AddRange(entities);
     }
 
+    public void Update(T entity)
+    {
+        _context.Set<T>().Update(entity);
+        _context.SaveChangesAsync();
+    }
+
     //public void AddRange(IEnumerable<T> entities)
     //{
     //    throw new NotImplementedException();
