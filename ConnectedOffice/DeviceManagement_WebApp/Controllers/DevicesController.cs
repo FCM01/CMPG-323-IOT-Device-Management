@@ -13,38 +13,40 @@ namespace DeviceManagement_WebApp.Controllers
     public class DevicesController : Controller
     {
         private readonly ConnectedOfficeContext _context;
+        private readonly IDeviceRepository _deviceRepository;
 
-        public DevicesController(ConnectedOfficeContext context)
+        public DevicesController(ConnectedOfficeContext context, IDeviceRepository deviceRepository)
         {
             _context = context;
+            _deviceRepository = deviceRepository;
         }
 
         // GET: Devices
         public async Task<IActionResult> Index()
         {
             var connectedOfficeContext = _context.Device.Include(d => d.Category).Include(d => d.Zone);
-            return View(await connectedOfficeContext.ToListAsync());
+            return View(_deviceRepository.GetAll());
         }
 
         // GET: Devices/Details/5
-        public async Task<IActionResult> Details(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        //public async Task<IActionResult> Details(Guid? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var device = await _context.Device
-                .Include(d => d.Category)
-                .Include(d => d.Zone)
-                .FirstOrDefaultAsync(m => m.DeviceId == id);
-            if (device == null)
-            {
-                return NotFound();
-            }
+        //    var device = _deviceRepository.GetById(id)
+        //        .Include(d => d.Category)
+        //        .Include(d => d.Zone)
+        //        .FirstOrDefaultAsync(m => m.DeviceId == id);
+        //    if (device == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(device);
-        }
+        //    return View(device);
+        //}
 
         // GET: Devices/Create
         public IActionResult Create()
@@ -62,8 +64,7 @@ namespace DeviceManagement_WebApp.Controllers
         public async Task<IActionResult> Create([Bind("DeviceId,DeviceName,CategoryId,ZoneId,Status,IsActive,DateCreated")] Device device)
         {
             device.DeviceId = Guid.NewGuid();
-            _context.Add(device);
-            await _context.SaveChangesAsync();
+            _deviceRepository.Add(device);
             return RedirectToAction(nameof(Index));
 
 
@@ -77,7 +78,7 @@ namespace DeviceManagement_WebApp.Controllers
                 return NotFound();
             }
 
-            var device = await _context.Device.FindAsync(id);
+            var device = _deviceRepository.GetById(id);            
             if (device == null)
             {
                 return NotFound();
@@ -101,6 +102,7 @@ namespace DeviceManagement_WebApp.Controllers
             try
             {
                 _context.Update(device);
+                //_deviceRepository.
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
@@ -119,32 +121,33 @@ namespace DeviceManagement_WebApp.Controllers
         }
 
         // GET: Devices/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        //public async Task<IActionResult> Delete(Guid? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var device = await _context.Device
-                .Include(d => d.Category)
-                .Include(d => d.Zone)
-                .FirstOrDefaultAsync(m => m.DeviceId == id);
-            if (device == null)
-            {
-                return NotFound();
-            }
+        //    var device = _deviceRepository.RemoveByID(id)
+        //        .Include(d => d.Category)
+        //        .Include(d => d.Zone)
+        //        .FirstOrDefaultAsync(m => m.DeviceId == id);
+        //    if (device == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(device);
-        }
+        //    return View(device);
+        //}
 
         // POST: Devices/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var device = await _context.Device.FindAsync(id);
-            _context.Device.Remove(device);
+            //var device = await _context.Device.FindAsync(id);
+            //_context.Device.Remove(device);
+            _deviceRepository.RemoveByID(id);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

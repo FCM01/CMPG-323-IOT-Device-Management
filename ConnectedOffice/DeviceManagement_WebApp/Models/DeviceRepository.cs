@@ -3,9 +3,9 @@ using System.Linq;
 
 namespace DeviceManagement_WebApp.Models
 {
-    public class DeviceRepositoryClass : GenericRepository<Device>, IDeviceRepository
+    public class DeviceRepository : GenericRepository<Device>, IDeviceRepository
     {
-        public DeviceRepositoryClass(ConnectedOfficeContext context) : base(context)
+        public DeviceRepository(ConnectedOfficeContext context) : base(context)
         {
         }
 

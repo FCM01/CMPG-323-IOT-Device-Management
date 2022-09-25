@@ -29,5 +29,10 @@ namespace DeviceManagement_WebApp.Models
         public virtual Category Category { get; set; }
         [DisplayName("Zone")]
         public virtual Zone Zone { get; set; }
+
+        internal object Include(Func<object, object> value)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

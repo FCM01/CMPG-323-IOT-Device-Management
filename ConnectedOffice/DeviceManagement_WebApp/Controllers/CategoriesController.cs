@@ -13,17 +13,24 @@ namespace DeviceManagement_WebApp.Controllers
     public class CategoriesController : Controller
     {
         private readonly ConnectedOfficeContext _context;
+        private readonly ICategoryRepository _categoryRepository;
 
-        public CategoriesController(ConnectedOfficeContext context)
+        public CategoriesController(ConnectedOfficeContext context , ICategoryRepository categoryRepository)
         {
             _context = context;
+            _categoryRepository = categoryRepository;
         }
-
-        // GET: Categories
+        // GET: Services
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Category.ToListAsync());
+            return View(_categoryRepository.GetAll());
         }
+
+        //// GET: Categories
+        //public async Task<IActionResult> Index()
+        //{
+        //    return View(await _context.Category.ToListAsync());
+        //}
 
         // GET: Categories/Details/5
         public async Task<IActionResult> Details(Guid? id)
