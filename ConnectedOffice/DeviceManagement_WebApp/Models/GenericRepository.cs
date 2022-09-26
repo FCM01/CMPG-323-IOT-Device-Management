@@ -40,7 +40,27 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
     //{
     //    throw new NotImplementedException();
     //}
+    public IEnumerable<T> Getlist(string dbname)
+    {
+        if (dbname == null)
+        {
+            return Enumerable.Empty<T>();
+        }
+        else if(dbname == "Zone")
+        {
 
+        }
+        else if (dbname == "Device")
+        {
+
+        }
+        else if(dbname == "Category")
+        {
+
+        }
+
+        return _context.Set<T>().ToList();
+    }
     public IEnumerable<T> GetAll()
     {
         return _context.Set<T>().ToList();
