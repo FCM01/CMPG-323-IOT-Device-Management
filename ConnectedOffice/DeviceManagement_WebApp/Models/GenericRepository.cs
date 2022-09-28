@@ -14,10 +14,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
     public void Add(T entity)
     {
         _context.Set<T>().Add(entity);
-    }
-    public void AddRange(IEnumerable<T> entities)
-    {
-        _context.Set<T>().AddRange(entities);
+        _context.SaveChanges();
     }
 
     public void Update(T entity)
@@ -26,40 +23,9 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         _context.SaveChangesAsync();
     }
 
-    //public void AddRange(IEnumerable<T> entities)
-    //{
-    //    throw new NotImplementedException();
-    //}
-
-    public IEnumerable<T> Find(Expression<Func<T, bool>> expression)
+    public IEnumerable<l> Getlist<l>() where l : class
     {
-        return _context.Set<T>().Where(expression);
-    }
-
-    //public IEnumerable<T> Find(Expression<Func<T, bool>> expression)
-    //{
-    //    throw new NotImplementedException();
-    //}
-    public IEnumerable<T> Getlist(string dbname)
-    {
-        if (dbname == null)
-        {
-            return Enumerable.Empty<T>();
-        }
-        else if(dbname == "Zone")
-        {
-
-        }
-        else if (dbname == "Device")
-        {
-
-        }
-        else if(dbname == "Category")
-        {
-
-        }
-
-        return _context.Set<T>().ToList();
+        return _context.Set<l>().ToList();
     }
     public IEnumerable<T> GetAll()
     {
@@ -69,34 +35,14 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         return _context.Set<T>().Find(id);
     }
-    public void Remove(T entity)
+    public void Delete(T entity)
     {
+        
         _context.Set<T>().Remove(entity);
-    }
-    public void RemoveByID(Guid id)
-    {
-         _context.Set<T>().Remove(_context.Set<T>().Find(id));
+        _context.SaveChangesAsync();
     }
 
-    public T RemoveByID(Guid? id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void RemoveRange(IEnumerable<T> entities)
-    {
-        _context.Set<T>().RemoveRange(entities);
-    }
-
-    //public void RemoveRange(IEnumerable<T> entities)
-    //{
-    //    throw new NotImplementedException();
-    //}
-
-    //IEnumerable<T> IGenericRepository<T>.GetAll()
-    //{
-    //    throw new NotImplementedException();
-    //}
+  
 }
 
 

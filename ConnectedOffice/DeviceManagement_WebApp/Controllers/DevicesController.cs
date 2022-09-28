@@ -47,8 +47,8 @@ namespace DeviceManagement_WebApp.Controllers
         // GET: Devices/Create
         public IActionResult Create()
         {
-            ViewData["CategoryId"] = new SelectList(_context.Categ, "CategoryId", "CategoryName");
-            ViewData["ZoneId"] = new SelectList(_context.Zone, "ZoneId", "ZoneName");
+            ViewData["CategoryId"] = new SelectList(_deviceRepository.Getlist<Category>(), "CategoryId", "CategoryName");
+            ViewData["ZoneId"] = new SelectList(_deviceRepository.Getlist<Zone>(), "ZoneId", "ZoneName");
             return View();
         }
 
@@ -79,8 +79,8 @@ namespace DeviceManagement_WebApp.Controllers
             {
                 return NotFound();
             }
-            ViewData["CategoryId"] = new SelectList(_context.Category, "CategoryId", "CategoryName", device.CategoryId);
-            ViewData["ZoneId"] = new SelectList(_context.Zone, "ZoneId", "ZoneName", device.ZoneId);
+            ViewData["CategoryId"] = new SelectList(_deviceRepository.Getlist<Category>(), "CategoryId", "CategoryName", device.CategoryId);
+            ViewData["ZoneId"] = new SelectList(_deviceRepository.Getlist<Zone>(), "ZoneId", "ZoneName", device.ZoneId);
             return View(device);
         }
 
@@ -123,7 +123,13 @@ namespace DeviceManagement_WebApp.Controllers
                 return NotFound();
             }
 
-            var device = _deviceRepository.RemoveByID(id);
+            var device = _deviceRepository.GetById(id);
+            Console.WriteLine("the entity " + device);
+            if (device != null)
+            {
+                _deviceRepository.Delete(device);
+            }
+            
             if (device == null)
             {
                 return NotFound();
@@ -137,7 +143,13 @@ namespace DeviceManagement_WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            _deviceRepository.RemoveByID(id);
+          
+            var device = _deviceRepository.GetById(id);
+            if (device != null)
+            {
+                _deviceRepository.Delete(device);
+            }
+            
             return RedirectToAction(nameof(Index));
         }
 

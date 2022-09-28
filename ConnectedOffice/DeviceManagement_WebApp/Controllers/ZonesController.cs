@@ -115,8 +115,14 @@ namespace DeviceManagement_WebApp.Controllers
                 return NotFound();
             }
 
-            var zone = _zoneRepository.RemoveByID(id);
-            if (zone == null)
+            var zone = _zoneRepository.GetById(id);
+            
+            if (zone != null)
+            {
+                _zoneRepository.Delete(zone);
+                
+            }
+            else
             {
                 return NotFound();
             }
@@ -129,8 +135,12 @@ namespace DeviceManagement_WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var zone = await _context.Zone.FindAsync(id);
-            _zoneRepository.Remove(zone);   
+            var zone = _zoneRepository.GetById(id);
+            if (zone != null)
+            {
+                _zoneRepository.Delete(zone);
+            }
+          
             return RedirectToAction(nameof(Index));
         }
 
