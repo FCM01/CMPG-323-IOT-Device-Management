@@ -146,7 +146,7 @@ namespace DeviceManagement_WebApp.Controllers
 
         private bool ZoneExists(Guid id)
         {
-           return _zoneRepository.Exists(id);s
+           return _zoneRepository.Exists(id);
         }
     }
 }
