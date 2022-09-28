@@ -155,15 +155,8 @@ namespace DeviceManagement_WebApp.Controllers
 
         private bool DeviceExists(Guid id)
         {
-            var device = _deviceRepository.GetById(id);
-            if (device != null)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return _deviceRepository.Exists(id);
+            
 
 
         }

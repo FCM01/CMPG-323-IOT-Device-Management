@@ -42,6 +42,16 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         _context.SaveChangesAsync();
     }
 
+    public bool Exists(Guid? id )
+    {
+        
+        if (_context.Set<T>().Find(id) != null)
+        {
+            return true;
+        }
+        return false;
+    }
+
   
 }
 

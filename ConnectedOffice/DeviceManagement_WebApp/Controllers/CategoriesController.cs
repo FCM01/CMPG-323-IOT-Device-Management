@@ -140,22 +140,12 @@ namespace DeviceManagement_WebApp.Controllers
             {
                 _categoryRepository.Delete(category);
             }
-        
             return RedirectToAction(nameof(Index));
         }
 
         private bool CategoryExists(Guid id)
         {
-            var category = _categoryRepository.GetById(id);
-            if (category != null)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-
-            }
+            return _categoryRepository.Exists(id);
         }
     }
 }
