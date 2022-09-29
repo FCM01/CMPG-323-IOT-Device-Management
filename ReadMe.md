@@ -62,3 +62,7 @@
 <p>The logout button will take the user to the landing page</p>
 
 <img src="resources\logoutbutton.jpg">
+
+<h1>Back ground about the implementation used </h1>
+<p>Theis project was created using the Advanced level Repository class pattern which has repository classes and intefaces </p>
+<p>From my understanding a repository class pattern is one of the most popular patterns to utilize in an application is the repository pattern since it enables programmers to combine all essential data activities pertaining to an object in a single main class. Without this approach, programmers would have to make many classes with the identical logic for each entity.</p>
